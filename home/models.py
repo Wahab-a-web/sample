@@ -23,7 +23,7 @@ class Task(models.Model):
         )
 
     def get_absolute_url(self):
-        return reverse('home:task-detail', args=[self.pk])
+        return reverse('home:task-update', args=[self.pk])
         #this will return /home/task/1
         #so <a href="{{ task.get_absolute_url() }}>Task</a>"
 

@@ -8,35 +8,23 @@
         <h1>Welcome, {{ request.user.username }}!</h1>
         <form method="POST" action="{% url 'logout' %}">
             {% csrf_token %}
-            {{ form.as_p }}
             <button type="submit">Logout</button>
         </form>
     {% else %}
         <a href="{% url 'login' %}">Login</a>
     {% endif %}
-    <form action="{% url 'home:task-list' %}" method="POST">
+
+    <form method="post">
         {% csrf_token %}
-        <label for="task_name">
-            <span>Task Name</span>
-            <input type="text" id="task_name" name="task_name">
-        </label>
-        <label for="task_due">
-            <span>Task Due Date</span>
-            <input type="datetime" id="task_due" name="task_due">
-        </label>
-        <select id="taskgroup" name="taskgroup">
-            {% for group in taskgroups %}
-                <option value="{{ group.pk }}">{{ group.name }}</option>
-            {% endfor %}
-        </select>
+        {{ form }}
         <input type="submit" value="Submit">
     </form>
+    
         <ul>
             {% for task in object_list %} 
             <!-- replaced tasks to object_list-->
             <li>
-                <a href="{{ task.get_absolute_url }}">
-                {{ task }} </a>
+                <a href="{{ task.get_absolute_url }}"> {{ task }} </a>
             </li>  
             {% endfor %} 
         </ul>
