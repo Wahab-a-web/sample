@@ -1,5 +1,5 @@
 .env
-csci40env/
+sample_env/
 **/*.pyc
 **/__pycache__
 midterm/
