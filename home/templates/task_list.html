@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <h1>Welcome, {{ request.user.username }}!</h1>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+        <ul>
+            {% for task in object_list %} 
+            <!-- replaced tasks to object_list-->
+            <li>
+                <a href="{{ task.get_absolute_url }}">
+                {{ task }} </a>
+            </li>  
+            {% endfor %} 
+        </ul>
+{% endblock %}
