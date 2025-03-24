@@ -5,18 +5,27 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 #this is added for models 
-from.models import Task
+from.models import Task, TaskGroup
 from django.views.generic.list import ListView 
 
 class TaskListView(ListView):
     model = Task
     template_name = 'task_list.html'
+    
+    def post(self, request, *args, **kwargs):
+        t = Task()
+        t.name = request.POST.get('task_name')
+        t.due_date = request.POST.get('task_due')
+        t.taskgroup = TaskGroup.objects.get(pk=request.POST.get('taskgroup'))
+        t.save()
+
+        return self.get(request, *args, **kwargs)
+        
 
 def index(request):
     return HttpResponse('Hello world')
 
 #new lesson
-
 def task_list(request):
     '''
     ctx = {
@@ -41,5 +50,3 @@ def task_detail(request, pk):
     #return pk
 
     return render(request, 'task_detail.html', ctx)
-
-
